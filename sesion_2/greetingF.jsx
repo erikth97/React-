@@ -34,3 +34,6 @@ const Greetingf = (props) => {
 Greetingf.propTypes = {
     name: PropTypes.string
 };
+
+
+export default Greetingf;
