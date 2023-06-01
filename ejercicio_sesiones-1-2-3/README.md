@@ -29,3 +29,6 @@ Si el contacto no está conectado, se debe mostrar: **Contacto No Disponible**
 - El Componente B debe ser renderizado desde el componente A y recibir los props adecuadamente.
 
 Recordatorio: Haz uso de Proptypes adecuadamente
+
+![image](https://github.com/erikth97/React_JS/assets/94486146/3ef198ca-58c3-4483-9e84-092621e4fd7e)
+
