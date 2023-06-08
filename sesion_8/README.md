@@ -2,6 +2,8 @@ En primer lugar, vamos a pasar datos entre un componente padre y un componente h
 
 Primero, tendrás que crear dos componentes, uno padre y otro hijo.
 
+jsx
+Copy code
 import React from 'react'
 
 export default function Padre() {
@@ -12,6 +14,9 @@ export default function Padre() {
   )
 }
 Parent.js
+
+jsx
+Copy code
 import React from 'react'
 
 export default function Hijo() {
@@ -22,8 +27,11 @@ export default function Hijo() {
     )
 }
 Child.js
+
 A continuación, importarás el componente hijo en el componente padre y lo devolverás.
 
+jsx
+Copy code
 import React from 'react'
 import Hijo from './Hijo';
 
@@ -35,8 +43,11 @@ export default function Padre() {
   )
 }
 Call the Child Component in the Parent Component
+
 Luego crearás una función y un botón para activar esa función. Además, crearás un estado utilizando el gancho (hook) useState para gestionar los datos.
 
+jsx
+Copy code
 import React from 'react'
 import Hijo from './Hijo';
 import { Button } from 'semantic-ui-react';
@@ -59,17 +70,20 @@ export default function Padre() {
     </div>
   )
 }
-Como puedes ver aquí, estamos llamando a la función padreAHijo al hacer clic en el botón clic Padre. Cuando se hace clic en el botón Padre, se guarda la información, "Estos son los datos del componente Padre al componente Hijo" en la variable datos.
+Como puedes ver aquí, estamos llamando a la función padreAHijo al hacer clic en el botón "Clic Padre". Cuando se hace clic en el botón Padre, se guarda la información, "Estos son los datos del componente Padre al componente Hijo", en la variable datos.
 
 Ahora, vamos a pasar ese estado de datos a nuestros componentes hijos. Puedes hacer esto usando props (propiedades).
 
 Pasa los datos como props cuando llames al componente hijo de la siguiente manera:
 
+jsx
+Copy code
 <Hijo padreAHijo={datos}/>
 Parent.js
+
 Aquí, estamos pasando los datos en el componente hijo como datos.
 
-datos es los datos que debemos pasar, y  padreAHijo es el nombre del prop.
+datos es los datos que debemos pasar, y padreAHijo es el nombre del prop.
 
 A continuación, es el momento de capturar los datos en el componente hijo. Y es muy sencillo.
 
@@ -77,6 +91,8 @@ Aquí puede haber dos casos.
 
 Caso 1: Si estás usando un componente funcional, simplemente captura el padreAHijo en los parámetros.
 
+jsx
+Copy code
 import React from 'react'
 
 export default function Hijo({padreAHijo}) {
@@ -87,8 +103,11 @@ export default function Hijo({padreAHijo}) {
     )
 }
 React Functional Component
-Case 2: Si tienes un componente clase, entonces puedes usar this.props.padreAHijo.
 
+Caso 2: Si tienes un componente clase, entonces puedes usar this.props.padreAHijo.
+
+jsx
+Copy code
 import React, { Component } from 'react'
 
 export default class Hijo extends Component {
@@ -101,163 +120,5 @@ export default class Hijo extends Component {
     }
 }
 React Class Component
+
 De cualquier manera, vas a obtener los mismos resultados:
-
-Screenshot-2021-06-06-132836
-"Esta es la data del componente Padre al componente Hijo [Clickea Padre]"
-Cuando hagamos clic en el botón Clic Padre, veremos los datos como resultados en la pantalla.
-
-import React from 'react'
-import Hijo from './Hijo';
-import { Button } from 'semantic-ui-react';
-import { useState } from 'react';
-import './App.css';
-
-export default function Padre() {
-  const [datos, estableceDatos] = useState('');
-  
-  const padreAHijo = () => {
-    estableceDatos("Esta es la data del componente Padre al componente Hijo.");
-  }
-  return (
-    <div className="App">
-      <Child padreAHijo={datos}/>
-      
-      <div className="Hijo">
-        <Button primary onClick={() => padreAHijo()}>Clic Padre</Button>
-      </div>
-    </div>
-  )
-}
-Arriba puedes ver el código completo para el Componente Padre.
-
-Como pasar data entre un Componente Hijo y un Componente Padre
-Esto es algo más complicado.
-
-En primer lugar, hay que crear una función en el componente padre llamada  hijoAPadre y un estado vacío llamado datos.
-
-const [datos, estableceDatos] = useState('');
-
-const hijoAPadre = () => {
-   
-}
-Componente Padre
-Entonces, pasa la función  hijoAPadre como una propiedad al componente hijo.
-
-<Hijo hijoAPadre={hijoAPadre}/>
-Pasando el hijoAPadre al componente Hijo.
-Ahora, en nuestro componente hijo, acepta esta llamada a la función como props y la asigna a un evento onClick.
-
-Además, declare un estado que contenga algunos datos en forma de cadena o número.
-
-Pasa los datos dentro de la función padreAHijo como parámetros.
-
-import React from 'react'
-import { Button } from 'semantic-ui-react';
-
-export default function Hijo({hijoAPadre}) {
-    const datos = "Esta es los datos del componente Padre al componente Hijo."
-    return (
-        <div>
-            <Button primary onClick={() => hijoAPadre(datos)}>Clic Hijo</Button>
-        </div>
-    )
-}
-Child Component
-A continuación, en el componente padre, acepta estos datos en la función hijoAPadre como parámetro. A continuación, establezca los datos utilizando el gancho useState.
-
-import './App.css';
-import { useState } from 'react';
-import Hijo from './Hijo';
-
-function Padre() {
-  const [datos, estableceDatos] = useState('');
-  
-  const hijoAPadre = (datoshijo) => {
-    estableceDatos(datoshijo);
-  }
-
-  return (
-    <div className="App">
-      <div>
-        <Hijo/>
-      </div>
-    </div>
-  );
-}
-
-export default Padre;
-Parent Component
-A continuación, muestra esa variable de datos en la función de retorno.
-
-import './App.css';
-import { useState } from 'react';
-import Hijo from './Hijo';
-
-function Padre() {
-  const [datos, estableceDatos] = useState('');
-  
-  const hijoAPadre = (datoshijo) => {
-    estableceDatos(datoshijo);
-  }
-
-  return (
-    <div className="App">
-     {datos}
-      <div>
-        <Child hijoAPadre={hijoAPadre}/>
-      </div>
-    </div>
-  );
-}
-
-export default Padre;
-Parent Component
-Los datos del hijo sobreescribirán los datos del padre cuando se haga clic en el botón Clic Hijo (Click Child).
-
-Screenshot-2021-06-06-134803
-Ahora, puedes pasar datos de hijo a padre y de padre a hijo como un profesional.
-
-También puedes pasar eventos como onClick u OnChange
-Solo llama un método de alerta en la función  hijoAPadre y pasa esa función como propiedad al componente hijo.
-
-import './App.css';
-import hijo from './Hijo';
-
-function Padre() {
-  const hijoAPadre = () => {
-    alert("Esto es una alerta del componente Hijo")
-  }
-
-  return (
-    <div className="App">
-      <div className="hijo">
-        <Hijo hijoAPadre={hijoAPadre}/>
-      </div>
-    </div>
-  );
-}
-
-export default Padre;
-Componente Padre
-Y en el componente hijo, acepta la función hijoAPadre como una propiedad. Entonces asígnale un evento onClick al botón.
-
-import React from 'react'
-import { Button } from 'semantic-ui-react';
-
-export default function Hijo({hijoAPadre}) {
-    return (
-        <div>
-            <Button primary onClick={() => hijoAPadre()}>Clic Hijo</Button>
-        </div>
-    )
-}
-Componente Hijo
-Tu función en el componente padre será llamada cuando hagas clic en el botón del componente hijo y verás esta alerta:
-
-Screenshot-2021-06-06-140405
-¡Y eso es todo!
-
-Puedes encontrar el código en GitHub si quieres seguir experimentando.
-
-Bueno, eso es todo amigos. Feliz aprendizaje!
